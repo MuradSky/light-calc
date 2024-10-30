@@ -9,10 +9,11 @@ const groundMaterial = () => {
         side: THREE.BackSide,
     });
 
-    const groundGeometry = new THREE.BoxGeometry(10, 3, 10);
+    const groundGeometry = new THREE.BoxGeometry(1, 1, 1);
     const groundMesh = new THREE.Mesh(groundGeometry, groundMat);
 
-    groundMesh.position.set(0, 0, 0);
+    groundGeometry.translate(0, 0, 0);
+    groundMesh.castShadow = true;
     groundMesh.receiveShadow = true;
 
     return groundMesh;

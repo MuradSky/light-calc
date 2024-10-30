@@ -22,23 +22,45 @@
         store.room[name] = value;
     }
 
+    function updateBind(id, name,  value) {
+        const light = params.find(item => item.id === id);
+        light.defaultValue = value;
+        updateParam(name, light.defaultValue);
+    }
+
     const decriment = (id) => {
         const item = params.find(item => item.id === id);
         if (+item.defaultValue <= item.min) return;
-        item.defaultValue = +Number.parseFloat(item.defaultValue - item.min).toFixed(1);
+        item.defaultValue = +Number.parseFloat(item.defaultValue - 0.5).toFixed(1);
         updateParam(item.name, item.defaultValue);
+        if (id == 4) {
+            updateBind(5, 'install_height', item.defaultValue);
+        } 
+       
     }
 
     const incriment = (id) => {
         const item = params.find(item => item.id === id);
-        item.defaultValue = +Number.parseFloat(item.defaultValue + item.min).toFixed(1);
+        item.defaultValue = +Number.parseFloat(item.defaultValue + 0.5).toFixed(1);
         updateParam(item.name, item.defaultValue);
+        if (id == 4) {
+            updateBind(5, 'install_height', item.defaultValue);
+        }
+         if (id == 5 && item.defaultValue > store.room.room_height) {
+            updateBind(4, 'room_height', item.defaultValue);
+        }
     }   
 
     const onChange = ([value, name])=> {
         const item = params.find(item => item.name === name);
         item.defaultValue = value;
         updateParam(item.name, item.defaultValue);
+        if (id == 4) {
+            updateBind(5, 'install_height', item.defaultValue);
+        }
+        if (id == 5 && item.defaultValue > store.room.room_height) {
+            updateBind(4, 'room_height', item.defaultValue);
+        }
     }
 </script>
 

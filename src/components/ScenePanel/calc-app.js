@@ -44,9 +44,13 @@ const app = {
         this.clearLamps();
         const roomWidth =(x * 1);
         const roomDepth = (z * 1);
-        let minSpacing = 2;
-        const lampsX = Math.floor(roomWidth / minSpacing);
-        const lampsZ = Math.floor(roomDepth / minSpacing);
+        let minSpacing = 1.5;
+        
+        const lightWidth = 1.2;
+        const lightDepth = 0.35;
+
+        const lampsX = Math.floor((roomWidth) / (minSpacing + lightWidth));
+        const lampsZ = Math.floor((roomDepth) / (minSpacing + lightDepth));
 
         this.scene.add(this.lampGroup);
         const lamp = createLamp(this.lampGroup);

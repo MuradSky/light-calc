@@ -30,7 +30,7 @@ const createLamp = (lampGroup) => {
         const rectLight = new THREE.RectAreaLight(0xffffff, 10, 1, 0.3);
         rectLight.position.set(0, 0, 0);
         rectLight.rotation.x = -Math.PI / 2;
-        rectLight.intensity = 50;
+        rectLight.intensity = 100;
     
         lamp.add(rectLight);
         lampGroup.add(localLampGroup);

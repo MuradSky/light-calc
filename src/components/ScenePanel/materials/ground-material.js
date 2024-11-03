@@ -1,14 +1,14 @@
 import * as THREE from 'three';
 
-const groundMaterial = () => {
+const groundMaterial = (is) => {
     const groundMat = new THREE.MeshStandardMaterial({
         roughness: 0.4,
         color: 0xffffff,
         metalness: .1,
-        transparent: true,
-        opacity: 0,
+        transparent: !is && true,
+        opacity: is ? 1 : 0,
         bumpScale: 1,
-        side: THREE.BackSide,
+        side: !is && THREE.BackSide,
     });
 
     const groundGeometry = new THREE.BoxGeometry(1, 1, 1);

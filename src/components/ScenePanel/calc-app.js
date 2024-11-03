@@ -65,7 +65,7 @@ const app = {
         const ground = groundMaterial();
         this.scene.add(ground);
         this.lightCountCalc(ground.scale);
-       
+
         const setting = (room) => {
             const { width, room_height, length } = room;
             ground.scale.set(width, room_height, length);

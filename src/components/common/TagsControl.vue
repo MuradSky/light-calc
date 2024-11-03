@@ -56,7 +56,7 @@
     .tags {
        display: flex;
        flex-wrap: wrap;
-       gap: 2px 15px;
+       gap: 4px 15px;
     }
 
     .btn {
@@ -66,12 +66,18 @@
         font-weight: 400;
         line-height: 21px;
         text-align: left;
-        color: var(--c-gray3);
+        color: var(--c-dark);
         transition: all .1s linear;
 
-        &:hover {
-            color: var(--c-dark);
-            opacity: .7;
+        &:disabled {
+            color: var(--c-gray3);
+            cursor: no-drop;
+        }
+
+        &:hover:not(:disabled) {
+            &::after {
+                opacity: .5;
+            }
         }
 
         &.is_active {

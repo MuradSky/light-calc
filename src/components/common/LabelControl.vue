@@ -1,9 +1,9 @@
 <script setup>
-    defineProps(['text'])
+    defineProps(['text', 'cssClass'])
 </script>
 
 <template>
-    <div :class="cn.label">
+    <div :class="[cn.label, cssClass]">
         {{ text }}
     </div>
 </template>

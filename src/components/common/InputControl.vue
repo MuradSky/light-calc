@@ -10,8 +10,11 @@
     });
 
     const onChange = (e) => {
-        const inputValue = e.target.value.replace(/[^0-9.]/g, "");
-        e.target.value = +inputValue;
+        const changeValue = e.target.value;
+
+        const inputValue = (changeValue[1] === '.' && !changeValue[2]) ? changeValue
+            : changeValue.replace(/[^0-9.]/g, "").replace(/(\..*?)\..*/g, '$1');
+        e.target.value = inputValue;
         if (+inputValue < props.min) {
             value.value = props.min;
             emit('onChange', [props.min, e.target.name]);
@@ -21,7 +24,7 @@
         }
     };
 
-    const onBlur = (e) => {
+    const onBlur = (e) => {        
         if (e.target.value === '') {
             e.target.value = props.min;
             value.value = props.min;

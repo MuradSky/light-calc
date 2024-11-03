@@ -1,5 +1,5 @@
 <script setup>
-    import { reactive, ref, watch, onMounted,  } from 'vue';
+    import { reactive, onMounted } from 'vue';
     import TitleControl from '../common/TitleControl.vue';
     import LabelControl from '../common/LabelControl.vue';
     import TagsControl from '../common/TagsControl.vue';
@@ -18,10 +18,6 @@
     onMounted(()=> {
         setCeiling(params.ceiling);
         setWall(params.ceiling, params.wall);
-    });
-
-    watch(params, params => {
-        console.log(params);
     });
 
     const selectTone = ({ name, value }) => {
@@ -55,7 +51,7 @@
         </div>
         <div :class="cn.body">
             <div :class="cn.row" v-for="item,  in controlPanel.params" :key="item.id">
-                <LabelControl :text="item.label" />
+                <LabelControl :cssClass="cn.label" :text="item.label" />
                 <div :class="cn.control">
                     <TagsControl
                         :options="item.options"
@@ -74,6 +70,10 @@
 <style scoped lang="scss" module="cn">
     .block {
         margin-bottom: 11px;
+    }
+
+    .label {
+        margin-bottom: 6px;
     }
 
     .head {

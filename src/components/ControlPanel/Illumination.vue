@@ -11,12 +11,6 @@
     const params = reactive(controlPanel.params);
     const illuminationValue = ref(0);
     
-    function setParamsToStore(params) {
-        params?.forEach(item => {
-            store.room[item.name] = item.defaultValue;
-        });
-    }
-
     const decriment = () => {
         if (illuminationValue.value > 5) {
             illuminationValue.value--;

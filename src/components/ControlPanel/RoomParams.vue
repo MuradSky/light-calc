@@ -1,5 +1,5 @@
 <script setup>
-    import { onMounted, reactive, watch } from 'vue';
+    import { onMounted, reactive } from 'vue';
     import TitleControl from '../common/TitleControl.vue';
     import LabelControl from '../common/LabelControl.vue';
     import ButtonControl from '../common/ButtonControl.vue';
@@ -31,7 +31,7 @@
     const decriment = (id) => {
         const item = params.find(item => item.id === id);
         if (+item.defaultValue <= item.min) return;
-        item.defaultValue = +Number.parseFloat(item.defaultValue - 0.5).toFixed(1);
+        item.defaultValue = +Number.parseFloat(item.defaultValue - 0.1).toFixed(1);
         updateParam(item.name, item.defaultValue);
         if (id == 4) {
             updateBind(5, 'install_height', item.defaultValue);
@@ -41,7 +41,7 @@
 
     const incriment = (id) => {
         const item = params.find(item => item.id === id);
-        item.defaultValue = +Number.parseFloat(item.defaultValue + 0.5).toFixed(1);
+        item.defaultValue = +Number.parseFloat(item.defaultValue + 0.1).toFixed(1);
         updateParam(item.name, item.defaultValue);
         if (id == 4) {
             updateBind(5, 'install_height', item.defaultValue);
@@ -55,10 +55,10 @@
         const item = params.find(item => item.name === name);
         item.defaultValue = value;
         updateParam(item.name, item.defaultValue);
-        if (id == 4) {
+        if (name == 'room_height') {
             updateBind(5, 'install_height', item.defaultValue);
         }
-        if (id == 5 && item.defaultValue > store.room.room_height) {
+        if (name == 'install_height' && item.defaultValue > store.room.room_height) {
             updateBind(4, 'room_height', item.defaultValue);
         }
     }

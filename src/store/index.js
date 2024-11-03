@@ -8,6 +8,6 @@ export const store = reactive({
 });
 
 
-watch(store, store => {
-    console.log(store);
-});
+// watch(store, store => {
+//     console.log(store);
+// });

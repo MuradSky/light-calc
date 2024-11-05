@@ -30,22 +30,22 @@ const app = {
 
         const roomWidth =(x * 1);
         const roomDepth = (z * 1);
-        let minSpacing = 3;
+        let minSpacing = 2;
         
         const lightWidth = 1.2;
         const lightDepth = 0.35;
-        const intensity = 100;
-        const lk = 75;
+        // const intensity = 100;
+        // const lk = 75;
 
-        const roomArea = roomWidth * roomWidth 
+        // const roomArea = roomWidth * roomWidth 
 
-        const calcNumOfLight = (lk, roomArea, intensity) => {
-            return Math.ceil((lk * roomArea) / intensity);
-        }
+        // const calcNumOfLight = (lk, roomArea, intensity) => {
+        //     return Math.ceil((lk * roomArea) / intensity);
+        // }
 
-        const numLights = calcNumOfLight(lk, roomArea, intensity);
+        // const numLights = calcNumOfLight(lk, roomArea, intensity);
 
-        console.log(numLights, x, z);
+        // console.log(numLights, x, z);
 
         const lampsX = Math.floor((roomWidth) / (minSpacing + lightWidth));
         const lampsZ = Math.floor((roomDepth) / (minSpacing + lightDepth));

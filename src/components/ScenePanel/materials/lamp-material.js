@@ -21,7 +21,10 @@ const createLamp = (lampGroup) => {
         glas.position.y = -0.01
         lamp.add(glas);
 
-        const topM = new THREE.MeshStandardMaterial({ color: '#000', emissive: '#000' });
+
+        const color = new THREE.Color(0x808080); // Начальный серый цвет
+        color.lerp(new THREE.Color(0xffffff), 0.3); 
+        const topM = new THREE.MeshStandardMaterial({ color: color, emissive: '#000' });
         const topGeometry = new THREE.BoxGeometry(1.4, 0.01, 0.35);
         const top = new THREE.Mesh(topGeometry, topM);
         top.position.y = .01

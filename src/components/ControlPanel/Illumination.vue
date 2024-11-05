@@ -55,6 +55,7 @@
                         :modelValue="item.defaultValue"
                         :options="item.options"
                         :name="item.name"
+                        :isWithTitles="item.isWithTitle"
                     />
                 </div>
             </div>

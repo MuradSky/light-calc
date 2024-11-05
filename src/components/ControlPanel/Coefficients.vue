@@ -1,5 +1,5 @@
 <script setup>
-    import { reactive, onMounted } from 'vue';
+    import { reactive, onMounted, watch } from 'vue';
     import TitleControl from '../common/TitleControl.vue';
     import LabelControl from '../common/LabelControl.vue';
     import TagsControl from '../common/TagsControl.vue';
@@ -14,7 +14,11 @@
         wallDisabled: [],
         floorDisabled: [],
     });
-     
+
+    watch(params, newVal => {
+        store.coefficients = newVal;
+    });
+
     onMounted(()=> {
         setCeiling(params.ceiling);
         setWall(params.ceiling, params.wall);
@@ -41,7 +45,6 @@
             }
         });
     }
-
 </script>
 
 <template>

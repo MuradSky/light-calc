@@ -13,6 +13,7 @@
             type: String,
             default: 'Select an option',
         },
+        isWithTitles: Boolean,
     });
     const emit = defineEmits(['update:modelValue']);
 
@@ -22,7 +23,8 @@
     const selectedValue = ref(props.modelValue);
 
     const selectedLabel = computed(() => {
-        const selectedOption = props.options.find(option => option.value === selectedValue.value);
+        const selectedOption = (props.isWithTitles ? props.options.map(item => item.list).flat() : props.options)
+            .find(option => option?.value === selectedValue?.value);
         return selectedOption ? selectedOption.label : null;
     });
 
@@ -70,6 +72,8 @@
 
     const extractValue = (string) => string.replace(/.*\((.*?)\).*/, '$1');
     const extractLabel = (string) => string.split('(')[0];
+
+    console.log(props);
 </script>
 
 <template>
@@ -88,7 +92,26 @@
                 </svg>
             </div>
         </div>
-        <div v-if="isOpen" :class="cn.dropdown_list">
+        
+        <div v-if="isOpen && isWithTitles" :class="[cn.dropdown_list, cn.over_wrap]">
+            <div v-for="item in options" :key="item.id">
+                <h4 @click.stop>{{ item.title }}</h4>
+                <ul :class="cn.dropdown_menu" ref="listRef">
+                    <li 
+                        v-for="(option, index) in item.list" 
+                        :key="index" 
+                        @click="selectOption(option)"
+                        :class="[option.label === selectedLabel && cn.active]"
+                        :data-active="option.label === selectedLabel"
+                    >
+                        {{ extractLabel(option.label) }}
+                        <span>({{ extractValue(option.label) }})</span>
+                    </li>
+                </ul>
+            </div>
+        </div>
+
+        <div v-if="isOpen && !isWithTitles" :class="cn.dropdown_list">
             <ul :class="cn.dropdown_menu" ref="listRef">
                 <li 
                     v-for="(option, index) in options" 
@@ -165,6 +188,46 @@
         box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
     }
 
+    .over_wrap {
+        width: 100%;
+        max-height: 300px;
+        overflow-x: hidden;
+        overflow-y: auto;
+        overscroll-behavior: contain;
+        /* Стилизация скроллбара */
+        &::-webkit-scrollbar {
+            width: 6px; /* Ширина скроллбара */
+        }
+
+        /* Цвет фона скроллбара */
+        &::-webkit-scrollbar-track {
+            background-color: #f0f0f0;
+        }
+
+        /* Цвет ползунка скроллбара */
+        &::-webkit-scrollbar-thumb {
+            background-color: #888;
+            border-radius: 6px; /* Скругление краёв ползунка */
+            border: 1px solid #f0f0f0; /* Пустое пространство вокруг ползунка */
+        }
+        .dropdown_menu {
+            overflow: initial;
+            max-height: initial;
+            margin-bottom: 10px;
+            overscroll-behavior: none;
+        }
+    
+        h4 {
+            font-size: 12px;
+            font-weight: 900;
+            line-height: 1.2;
+            margin: 0;
+            padding: 8px;
+        
+            cursor: default;
+        }
+    }
+
     .dropdown_menu {
         width: 100%;
         max-height: 200px;
@@ -172,6 +235,7 @@
         list-style-type: none;
         padding: 0;
         margin: 0;
+        overscroll-behavior: contain;
 
        /* Стилизация скроллбара */
         &::-webkit-scrollbar {

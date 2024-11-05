@@ -5,6 +5,7 @@ export const store = reactive({
     ...config,
     room: {},
     illumination: {},
+    coefficients: {},
 });
 
 

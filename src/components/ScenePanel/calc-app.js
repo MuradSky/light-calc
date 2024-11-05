@@ -5,6 +5,8 @@ import { useCamera, useHelpers, useRender, useScene, useSceneLights } from './ho
 import { store } from '@/store';
 import { watch } from 'vue';
 
+const fac = num => (num * 0.01) + 0.2;
+
 const app = {
     scene: null,
     camera: null,
@@ -25,12 +27,25 @@ const app = {
     },
     lightCountCalc({ x, z }) {
         this.clearLamps();
+
         const roomWidth =(x * 1);
         const roomDepth = (z * 1);
-        let minSpacing = 1.5;
+        let minSpacing = 3;
         
         const lightWidth = 1.2;
         const lightDepth = 0.35;
+        const intensity = 100;
+        const lk = 75;
+
+        const roomArea = roomWidth * roomWidth 
+
+        const calcNumOfLight = (lk, roomArea, intensity) => {
+            return Math.ceil((lk * roomArea) / intensity);
+        }
+
+        const numLights = calcNumOfLight(lk, roomArea, intensity);
+
+        console.log(numLights, x, z);
 
         const lampsX = Math.floor((roomWidth) / (minSpacing + lightWidth));
         const lampsZ = Math.floor((roomDepth) / (minSpacing + lightDepth));
@@ -82,9 +97,32 @@ const app = {
         }
 
         setting(store.room);
+
         watch(store, newVal => {
             setting(newVal.room);
         });
+
+        watch(store.coefficients, newVal => {
+            model.traverse(function (child) {
+                if (child.isMesh) {
+                    if (child.material.name.includes('Ceiling')) {
+                        const koef =  fac(newVal.ceiling)
+                        child.material.color.setRGB(0.5263266 * koef, 0.5263266 * koef, 0.5263266 * koef);
+                    }
+
+                    if (child.material.name.includes('Wall')) {
+                        const koef = fac(newVal.wall);
+                        child.material.color.setRGB(0.461456865 * koef, 0.428446 * koef, 0.3664102 * koef);
+                    }
+
+                    if (child.material.name.includes('Floor')) {
+                        const koef = newVal.floor === 30 ? 1 : newVal.floor == 20 ?  .5 : 0.1
+                        child.material.color.setRGB(0.0511220545 * koef, 0.0220129937 * koef, 0.004116177 * koef);
+                    }                    
+                }
+            });
+        });
+        
         this.animated();
     },
     animated() {

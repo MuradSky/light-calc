@@ -1,6 +1,23 @@
 <script setup>
+	import { onMounted, watch } from 'vue';
 	import Layout from './components/Layout.vue';
-	// console.log(import.meta.env.DEV)
+	import { store } from './store';
+
+	onMounted(() => {
+		const lightCount = document.querySelector('[data-selector="light.count"]');
+		const roomArea = document.querySelector('[data-selector="room.area"]');
+
+		lightCount.innerText = store.lightCount; 
+		roomArea.innerText = +Number.parseFloat(store.room.length * store.room.width).toFixed(1);
+	});
+
+	watch(store, newVal => {
+		const lightCount = document.querySelector('[data-selector="light.count"]');
+		const roomArea = document.querySelector('[data-selector="room.area"]');
+
+		lightCount.innerText = newVal.lightCount; 
+		roomArea.innerText = +Number.parseFloat(newVal.room.length * newVal.room.width).toFixed(1);
+	});
 </script>
 
 <template>

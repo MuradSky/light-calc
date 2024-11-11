@@ -5,9 +5,47 @@
 		<link rel="icon" type="image/svg+xml" href="/vite.svg" />
 		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
 		<title>Vite + Vue</title>
+
+		<style>
+			.panel {
+				width: 100%;
+
+				display: flex;
+				align-items: center;
+				gap: 20px;
+
+				padding: 40px 80px;
+				
+			}
+
+			.light-count,
+			.area-size {
+				display: flex;
+				align-items: flex-end;
+				font-size: 60px;
+				gap: 6px;
+			}
+
+			.area-size sup {
+				font-size: 32px;
+			}
+		</style>
 	</head>
 	<body>
 		<div id="light-calc-app"></div>
+
+		<div class="panel">
+			<div class="area-size">
+				<div data-selector="room.area">0</div>
+				<div>м<sup>2</sup></div>
+			</div>
+			<div class="light-count">
+				<div data-selector="light.count">0</div>
+				<div>шт</div>
+			</div>
+		</div>
+		
+
 		<script type="module" src="/src/main.js"></script>
 	</body>
 </html>

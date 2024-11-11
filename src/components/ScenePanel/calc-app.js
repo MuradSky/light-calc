@@ -25,65 +25,52 @@ const app = {
             });
         }
     },
-    lightCountCalc({ x, z }, lightCount) {
+    lightCountCalc({ x, z }, count) {
+        console.log(count);
+
         this.clearLamps();
-
-        const roomWidth =(x * 1);
-        const roomDepth = (z * 1);
-        let minSpacing = 2.5;
-        
-        let lightWidth = 1.2;
-        let lightDepth = 0.35;
-        const lampsPerRow = Math.ceil(Math.sqrt((lightCount)));
-        const lampsPerColumn = Math.ceil(lightCount / lampsPerRow); // Количество колонок, если ряды не заполняют все
-
         this.scene.add(this.lampGroup);
         const lamp = createLamp(this.lampGroup);
         const yPosition = store.room.install_height;
 
-        function adjustRoomAndLights() {
-        // Расчет количества светильников в ряду и колонке с учетом отступов
-            const lampsPerRow = Math.ceil(Math.sqrt(lightCount)); 
-            const lampsPerColumn = Math.ceil(lightCount / lampsPerRow);
+        const roomWidth = x; // ширина комнаты
+        const roomHeight = z; // длина комнаты
+        const lightSize = 0.3; // размер светильника
+        let numLights = count; // начальное количество светильников
 
-            // Проверяем, помещаются ли светильники в комнату
-            let totalWidth = lampsPerRow * (lightWidth + minSpacing);
-            let totalDepth = lampsPerColumn * (lightDepth + minSpacing);
+        // Определяем размер сетки для покрытия всей комнаты
+        const gridCols = Math.ceil(Math.sqrt(numLights));
+        const gridRows = Math.ceil(numLights / gridCols);
 
-            // Если не помещаются, уменьшаем размеры светильников или отступы
-            if (totalWidth > roomWidth || totalDepth > roomDepth) {
-                // Уменьшаем размер светильников и отступы
-                const scaleFactorX = roomWidth / totalWidth;
-                const scaleFactorZ = roomDepth / totalDepth;
-                const scaleFactor = Math.min(scaleFactorX, scaleFactorZ); // Меньший коэффициент, чтобы все влезло
+        // Рассчитываем общее количество ячеек в сетке
+        const totalCells = gridCols * gridRows;
 
-                lightWidth *= scaleFactor;
-                lightDepth *= scaleFactor;
-                minSpacing *= scaleFactor;
-            }
+        // Если светильников меньше, чем ячеек, дополняем их количество
+        if (numLights < totalCells) {
+            numLights = totalCells;
         }
 
-        adjustRoomAndLights();
+        // Рассчитываем размеры ячеек
+        const cellWidth = roomWidth / gridCols;
+        const cellHeight = roomHeight / gridRows;
 
-        for (let i = 0; i < lightCount; i++) {
-            const row = Math.floor(i / lampsPerRow);
-            const col = i % lampsPerRow;
-            
-            const x = (col - (lampsPerRow - 1) / 2) * (lightWidth + minSpacing);
-            const z = (row - (lampsPerColumn - 1) / 2) * (lightDepth + minSpacing);
+        // Начальная позиция для центрирования сетки в комнате
+        const startX = -roomWidth / 2 + cellWidth / 2;
+        const startZ = -roomHeight / 2 + cellHeight / 2;
 
-            if (Math.abs(x) > roomWidth / 2) {
-                continue;
+        // Добавляем светильники в матрицу, заполняя все ячейки
+        for (let row = 0; row < gridRows; row++) {
+            for (let col = 0; col < gridCols; col++) {
+                if (numLights <= 0) break; // Если все светильники добавлены, выходим
+
+                // Позиция светильника в текущей ячейке
+                const x = startX + col * cellWidth;
+                const z = startZ + row * cellHeight;
+
+                lamp(x, yPosition, z); // Высота размещения y = 2
+                numLights--;
             }
-            if (Math.abs(z) > roomDepth / 2) {
-                continue;
-            }
-
-            lamp(
-                { x, z, y: yPosition },
-                { width: lightWidth, depth: lightDepth }
-            );
-        } 
+        }
     },
 
     async start(canvas) {

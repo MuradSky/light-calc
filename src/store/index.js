@@ -7,6 +7,8 @@ export const store = reactive({
     illumination: {},
     coefficients: {},
     lightCount: 1,
+    totalLightCount: 1,
+    luminous_flux: 1650,
 });
 
 export const matrix = {
@@ -65,7 +67,7 @@ export function calculate(params) {
 
 let timeOut = null;
 
-watch(store, store => {
+watch(store, store => {    
     params.length = store.room.length;
     params.width = store.room.width;
     params.room_height = store.room.room_height;
@@ -73,7 +75,8 @@ watch(store, store => {
     params.illumination_lk = store.illumination.lk;
     params.reserve_coefficient = store.illumination.premises;
     params.reflection_coefficient = store.coefficients.ceiling + '/' + store.coefficients.wall + '/' + store.coefficients.floor;
-    
+    params.luminous_flux = +store.luminous_flux;
+
     timeOut && clearTimeout(timeOut);
     timeOut = setTimeout(() => {
         clearTimeout(timeOut);

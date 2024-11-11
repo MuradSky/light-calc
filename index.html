@@ -29,9 +29,31 @@
 			.area-size sup {
 				font-size: 32px;
 			}
+
+			.select {
+				padding: 32px 80px 0;
+			}
+
+			.select select {
+				font-size: 24px;
+			}
 		</style>
 	</head>
 	<body>
+		<div class="select">
+			<h3>Тип светильника</h3>
+			<select data-selector="light.style">
+				<option value="1650">1650</option>
+				<option value="650">650</option>
+				<option value="200">200</option>
+				<option value="500">500</option>
+				<option value="700">700</option>
+				<option value="2500">2500</option>
+				<option value="2700">2700</option>
+				<option value="3000">3000</option>
+				<option value="3500">3500</option>
+			</select>
+		</div>
 		<div id="light-calc-app"></div>
 
 		<div class="panel">
@@ -45,7 +67,12 @@
 			</div>
 		</div>
 		
-
+		<script>
+			const select = document.querySelector('[data-selector="light.style"]');
+			select.addEventListener('change', e => {
+				window.setLuminousFlux(e.target.value);
+			});
+		</script>
 		<script type="module" src="/src/main.js"></script>
 	</body>
 </html>

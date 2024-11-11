@@ -57,7 +57,6 @@ function addPointLight(position) {
     pointLight.position.y = 2;
     pointLight.position.z = 7;
     pointLight.position.x = -1;
-    console.log(position);
     pointLight.castShadow = true;
     saveScene.add(pointLight);
 }

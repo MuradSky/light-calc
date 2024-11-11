@@ -72,8 +72,6 @@
 
     const extractValue = (string) => string.replace(/.*\((.*?)\).*/, '$1');
     const extractLabel = (string) => string.split('(')[0];
-
-    console.log(props);
 </script>
 
 <template>

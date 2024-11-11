@@ -3,11 +3,15 @@
 	import Layout from './components/Layout.vue';
 	import { store } from './store';
 
+	window.setLuminousFlux = (value) => {
+		store.luminous_flux = value;
+	}
+
 	onMounted(() => {
 		const lightCount = document.querySelector('[data-selector="light.count"]');
 		const roomArea = document.querySelector('[data-selector="room.area"]');
 
-		lightCount.innerText = store.lightCount; 
+		lightCount.innerText = store.totalLightCount; 
 		roomArea.innerText = +Number.parseFloat(store.room.length * store.room.width).toFixed(1);
 	});
 
@@ -15,7 +19,7 @@
 		const lightCount = document.querySelector('[data-selector="light.count"]');
 		const roomArea = document.querySelector('[data-selector="room.area"]');
 
-		lightCount.innerText = newVal.lightCount; 
+		lightCount.innerText = newVal.totalLightCount; 
 		roomArea.innerText = +Number.parseFloat(newVal.room.length * newVal.room.width).toFixed(1);
 	});
 </script>

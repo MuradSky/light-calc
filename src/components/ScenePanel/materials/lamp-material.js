@@ -3,8 +3,8 @@ import { RectAreaLightUniformsLib } from 'three/examples/jsm/lights/RectAreaLigh
 RectAreaLightUniformsLib.init();
 
 const createLamp = (lampGroup) => {
-    const width = .3;
-    const deph = .3;
+    const width = .4;
+    const deph = .4;
     return (x, y, z) => {
         const lampM = new THREE.MeshStandardMaterial({ color: '#fff', emissive: 'gray' });
         const boxGeometry = new THREE.BoxGeometry(width, 0.01, deph);

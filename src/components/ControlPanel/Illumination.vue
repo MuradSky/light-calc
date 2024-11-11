@@ -26,7 +26,6 @@
     }
 
     const updateSelect = ([name, value]) => {
-        console.log(name, value);
             
         if (name === 'type-of-premises') {
             illuminationValue.value = value;

@@ -26,51 +26,55 @@ const app = {
         }
     },
     lightCountCalc({ x, z }, count) {
-        console.log(count);
-
         this.clearLamps();
         this.scene.add(this.lampGroup);
         const lamp = createLamp(this.lampGroup);
         const yPosition = store.room.install_height;
 
-        const roomWidth = x; // ширина комнаты
-        const roomHeight = z; // длина комнаты
+        const roomWidth = x;  // ширина комнаты в метрах
+        const roomHeight = z; // длина комнаты в метрах
         const lightSize = 0.3; // размер светильника
-        let numLights = count; // начальное количество светильников
+        let numLights = count;    // количество светильников
+
+        // Создаем сцену
+        const scene = new THREE.Scene();
 
         // Определяем размер сетки для покрытия всей комнаты
-        const gridCols = Math.ceil(Math.sqrt(numLights));
-        const gridRows = Math.ceil(numLights / gridCols);
+        const gridCols = Math.ceil(Math.sqrt(numLights));  // количество колонок
+        const gridRows = Math.ceil(numLights / gridCols);  // количество строк
 
         // Рассчитываем общее количество ячеек в сетке
         const totalCells = gridCols * gridRows;
 
-        // Если светильников меньше, чем ячеек, дополняем их количество
+        // Если светильников меньше, чем ячеек, увеличиваем количество для заполнения
         if (numLights < totalCells) {
             numLights = totalCells;
         }
 
-        // Рассчитываем размеры ячеек
-        const cellWidth = roomWidth / gridCols;
-        const cellHeight = roomHeight / gridRows;
+        // Рассчитываем размеры ячеек (расстояние между светильниками)
+        const spacingX = (roomWidth - lightSize) / (gridCols + 1); // отступ по X
+        const spacingZ = (roomHeight - lightSize) / (gridRows + 1); // отступ по Z
 
-        // Начальная позиция для центрирования сетки в комнате
-        const startX = -roomWidth / 2 + cellWidth / 2;
-        const startZ = -roomHeight / 2 + cellHeight / 2;
+        // Начальная позиция, чтобы сетка была центрирована
+        const startX = -roomWidth / 2 + spacingX + lightSize / 2;
+        const startZ = -roomHeight / 2 + spacingZ + lightSize / 2;
 
-        // Добавляем светильники в матрицу, заполняя все ячейки
+        let lightCount = 0;
         for (let row = 0; row < gridRows; row++) {
             for (let col = 0; col < gridCols; col++) {
-                if (numLights <= 0) break; // Если все светильники добавлены, выходим
+                if (lightCount >= numLights) break;  // Выход, если все светильники размещены
 
-                // Позиция светильника в текущей ячейке
-                const x = startX + col * cellWidth;
-                const z = startZ + row * cellHeight;
+                // Рассчитываем позицию светильника в сетке
+                const x = startX + col * spacingX;
+                const z = startZ + row * spacingZ;
 
-                lamp(x, yPosition, z); // Высота размещения y = 2
-                numLights--;
+                // Создаем светильник и задаем его позицию
+                lamp(x, yPosition, z);
+                lightCount++;
             }
         }
+
+        store.totalLightCount = numLights;
     },
 
     async start(canvas) {

@@ -93,10 +93,10 @@
             </div>
         </div>
         
-        <div v-if="isOpen && isWithTitles" :class="[cn.dropdown_list, cn.over_wrap]">
+        <div v-if="isOpen && isWithTitles" :class="[cn.dropdown_list, cn.over_wrap]" ref="listRef">
             <div v-for="item in options" :key="item.id">
                 <h4 @click.stop>{{ item.title }}</h4>
-                <ul :class="cn.dropdown_menu" ref="listRef">
+                <ul :class="cn.dropdown_menu">
                     <li 
                         v-for="(option, index) in item.list" 
                         :key="index" 

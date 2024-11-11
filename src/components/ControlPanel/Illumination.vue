@@ -1,5 +1,5 @@
 <script setup>
-    import { ref, reactive } from 'vue';
+    import { ref, reactive, watch } from 'vue';
     import TitleControl from '../common/TitleControl.vue';
     import LabelControl from '../common/LabelControl.vue';
     import ButtonControl from '../common/ButtonControl.vue';
@@ -26,10 +26,19 @@
     }
 
     const updateSelect = ([name, value]) => {
+        console.log(name, value);
+            
         if (name === 'type-of-premises') {
             illuminationValue.value = value;
         }
+        if (name === 'cleanliness-of-the-premises') {
+            store.illumination.premises = value;
+        }
     }
+
+    watch(illuminationValue, newVal => {
+        store.illumination.lk = newVal;
+    });
 </script>
 
 <template>
@@ -38,7 +47,11 @@
             <TitleControl :text="controlPanel.title" />
         </div>
         <div :class="cn.body">
-            <div :class="[cn.row, item.type === 'select' && cn.row_sec ]" v-for="item,  in params" :key="item.id">
+            <div 
+                :class="[cn.row, item.type === 'select' && cn.row_sec ]" 
+                v-for="item,  in params" 
+                :key="item.id"
+            >
                 <LabelControl :text="item.label" />
                 <div :class="cn.control" v-if="item.type !== 'select'">
                     <ButtonControl :type="'minus'" @click="decriment(item.id)" />

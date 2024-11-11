@@ -1,14 +1,3 @@
-import { reactive, watch } from "vue";
-import config from './config.json';
-
-export const store = reactive({
-    ...config,
-    room: {},
-    illumination: {},
-    coefficients: {},
-    lightCount: 1,
-});
-
 export const matrix = {
     "0/0/0": { "1.25": "44", "1.0": "36", "2.0": "55", "3.0": "65", "4.0": "70", "5.0": "73", "0.8": "30", "0.6": "23", "2.5": "61", "1.5": "49" },
     "30/30/10": { "1.25": "51", "1.0": "43", "2.0": "63", "3.0": "72", "4.0": "76", "5.0": "80", "0.8": "37", "0.6": "29", "2.5": "68", "1.5": "56" },
@@ -42,14 +31,14 @@ const findClosest = (array, target) => {
     return closest;
 }
 
-const space = (p) => {
-    return p.width * p.length;
+const space = () => {
+    return params.width * params.length;
 }
 
-export function calculate(params) {
-    let _space = space(params);
+export function calculate() {
+    let _space = space();
     let lamp_reflection = matrix[params.reflection_coefficient];
-    let room_index = _space / ((params.room_height - params.working_plane) * (params.width + params.length));
+    let room_index = _space / ((params.height - params.working_plane) * (params.width + params.length));
     let closest_room_index = findClosest(Object.keys(lamp_reflection), room_index);
 
     if (closest_room_index % 1 === 0) {
@@ -60,23 +49,5 @@ export function calculate(params) {
     let qty = Math.ceil(params.illumination_lk * _space * params.reserve_coefficient / (params.luminous_flux * usage_coef));
     qty = qty === Infinity ? 0 : qty;
 
-    store.lightCount = qty;
+    console.log(qty);
 }
-
-let timeOut = null;
-
-watch(store, store => {
-    params.length = store.room.length;
-    params.width = store.room.width;
-    params.room_height = store.room.room_height;
-    params.working_plane = store.room.working_plane;
-    params.illumination_lk = store.illumination.lk;
-    params.reserve_coefficient = store.illumination.premises;
-    params.reflection_coefficient = store.coefficients.ceiling + '/' + store.coefficients.wall + '/' + store.coefficients.floor;
-    
-    timeOut && clearTimeout(timeOut);
-    timeOut = setTimeout(() => {
-        clearTimeout(timeOut);
-        calculate(params);
-    }, 100);
-});

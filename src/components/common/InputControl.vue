@@ -9,13 +9,22 @@
         value.value = newValue;
     });
 
+    const onInput = e => {
+       const changeValue = e.target.value;
+
+        const inputValue = (changeValue[1] === '.' && !changeValue[2]) ? changeValue
+            : changeValue.replace(/[^0-9.]/g, "").replace(/(\..*?)\..*/g, '$1');
+        e.target.value = inputValue;
+        value.value = +inputValue;
+    }
+
     const onChange = (e) => {
         const changeValue = e.target.value;
 
         const inputValue = (changeValue[1] === '.' && !changeValue[2]) ? changeValue
             : changeValue.replace(/[^0-9.]/g, "").replace(/(\..*?)\..*/g, '$1');
         e.target.value = inputValue;
-        if (+inputValue < props.min) {
+        if (+inputValue < props.min || isNaN(e.target.value)) {
             value.value = props.min;
             emit('onChange', [props.min, e.target.name]);
         } else {
@@ -44,7 +53,8 @@
             type="text"
             :name="name"
             :value="value"
-            @input="onChange"
+            @input="onInput"
+            @change="onChange"
             @blur="onBlur"
         >
     </label>
@@ -63,7 +73,7 @@
 
             background-color: var(--c-gray);
             color: var(--c-dark);
-            text-align: center;
+            text-align: center !important;
             transition: all .1s linear;
             &:hover,
             &:focus {
@@ -71,4 +81,19 @@
             }
         }
     }
+
+    input[type="number"] {
+  -moz-appearance: textfield; /* For Firefox */
+  -webkit-appearance: none; /* For Chrome, Safari, and Opera */
+  appearance: none; /* Standard property */
+
+  /* Optionally, add custom styles here */
+}
+
+/* Hide spinners in Chrome, Safari, and Opera */
+input[type="number"]::-webkit-outer-spin-button,
+input[type="number"]::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
 </style>

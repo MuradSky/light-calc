@@ -25,7 +25,7 @@ const app = {
             });
         }
     },
-    lightCountCalc({ x, z }, count) {
+    lightCountCalc({ x, z }, count, waht) {
         this.clearLamps();
         this.scene.add(this.lampGroup);
         const lamp = createLamp(this.lampGroup);
@@ -35,9 +35,6 @@ const app = {
         const roomHeight = z; // длина комнаты в метрах
         const lightSize = 0.3; // размер светильника
         let numLights = count;    // количество светильников
-
-        // Создаем сцену
-        const scene = new THREE.Scene();
 
         // Определяем размер сетки для покрытия всей комнаты
         const gridCols = Math.ceil(Math.sqrt(numLights));  // количество колонок
@@ -69,7 +66,7 @@ const app = {
                 const z = startZ + row * spacingZ;
 
                 // Создаем светильник и задаем его позицию
-                lamp(x, yPosition, z);
+                lamp(x, yPosition, z, waht);
                 lightCount++;
             }
         }
@@ -91,11 +88,11 @@ const app = {
         this.scene.add(ground);
         this.lightCountCalc(ground.scale);
 
-        const setting = (room, lightCount) => {
+        const setting = (room, lightCount, waht) => {
             const { width, room_height, length } = room;
             ground.scale.set(width, room_height, length);
             ground.position.y = (ground.position.y + Math.abs(room_height - ground.position.y)) / 2;
-            this.lightCountCalc(ground.scale, lightCount);
+            this.lightCountCalc(ground.scale, lightCount, waht);
 
             model.traverse(function (child) {
                 if (child.isMesh) {
@@ -106,10 +103,10 @@ const app = {
             });
         }
 
-        setting(store.room, store.lightCount);
+        setting(store.room, store.lightCount, store.luminous_flux);
 
-        watch(store, newVal => {
-            setting(newVal.room, store.lightCount);
+        watch(store, () => {
+            setting(store.room, store.lightCount, store.luminous_flux);
         });
 
         watch(store.coefficients, newVal => {

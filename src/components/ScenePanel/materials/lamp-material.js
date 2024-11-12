@@ -5,7 +5,7 @@ RectAreaLightUniformsLib.init();
 const createLamp = (lampGroup) => {
     const width = .4;
     const deph = .4;
-    return (x, y, z) => {
+    return (x, y, z, waht) => {
         const lampM = new THREE.MeshStandardMaterial({ color: '#fff', emissive: 'gray' });
         const boxGeometry = new THREE.BoxGeometry(width, 0.01, deph);
         const lamp = new THREE.Mesh(boxGeometry, lampM);
@@ -31,7 +31,7 @@ const createLamp = (lampGroup) => {
         const rectLight = new THREE.RectAreaLight(0xffffff, 10, 1, 0.3);
         rectLight.position.set(0, 0, 0);
         rectLight.rotation.x = -Math.PI / 2;
-        rectLight.intensity = 25;
+        rectLight.intensity = 35 + ((waht * 35) / 1000);
     
         lamp.add(rectLight);
         lampGroup.add(localLampGroup);

@@ -31,7 +31,7 @@
 			}
 
 			.select {
-				padding: 32px 80px 0;
+				padding: 0 40px 0 0;
 			}
 
 			.select select {
@@ -40,23 +40,24 @@
 		</style>
 	</head>
 	<body>
-		<div class="select">
-			<h3>Тип светильника</h3>
-			<select data-selector="light.style">
-				<option value="1650">1650</option>
-				<option value="650">650</option>
-				<option value="200">200</option>
-				<option value="500">500</option>
-				<option value="700">700</option>
-				<option value="2500">2500</option>
-				<option value="2700">2700</option>
-				<option value="3000">3000</option>
-				<option value="3500">3500</option>
-			</select>
-		</div>
+		
 		<div id="light-calc-app"></div>
 
 		<div class="panel">
+			<div class="select">
+				<h3>Cила света</h3>
+				<select data-selector="light.style">
+					<option value="1650">1650</option>
+					<option value="650">650</option>
+					<option value="200">200</option>
+					<option value="500">500</option>
+					<option value="700">700</option>
+					<option value="2500">2500</option>
+					<option value="2700">2700</option>
+					<option value="3000">3000</option>
+					<option value="3500">3500</option>
+				</select>
+			</div>
 			<div class="area-size">
 				<div data-selector="room.area">0</div>
 				<div>м<sup>2</sup></div>

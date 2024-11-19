@@ -14,6 +14,7 @@
             default: 'Select an option',
         },
         isWithTitles: Boolean,
+        isNotInit: Boolean,
     });
     const emit = defineEmits(['update:modelValue']);
 
@@ -44,8 +45,10 @@
         }
     }
 
-    onMounted(()=> {
-        emit('update:modelValue', [props.name, props.modelValue])
+onMounted(() => {
+        console.log(props.isNotInit);
+
+       !props.isNotInit && emit('update:modelValue', [props.name, props.modelValue])
         window.addEventListener('click', onClose);
     });
 

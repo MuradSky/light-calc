@@ -41,6 +41,7 @@
 
     const incriment = (id) => {
         const item = params.find(item => item.id === id);
+        if (+item.defaultValue >= item.max) return;
         item.defaultValue = +Number.parseFloat(item.defaultValue + 0.1).toFixed(1);
         updateParam(item.name, item.defaultValue);
         if (id == 4) {
@@ -77,6 +78,7 @@
                     <InputControl 
                         :name="item.name"
                         :min="item.min"
+                        :max="item.max"
                         :value="item.defaultValue"
                         @onChange="onChange"  
                     />

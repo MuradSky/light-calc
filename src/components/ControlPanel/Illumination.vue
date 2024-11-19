@@ -1,5 +1,5 @@
 <script setup>
-    import { ref, reactive, watch } from 'vue';
+    import { ref, reactive, watch, onMounted } from 'vue';
     import TitleControl from '../common/TitleControl.vue';
     import LabelControl from '../common/LabelControl.vue';
     import ButtonControl from '../common/ButtonControl.vue';
@@ -9,7 +9,7 @@
     
     const controlPanel = {...store.controlPanel.second};
     const params = reactive(controlPanel.params);
-    const illuminationValue = ref(0);
+    const illuminationValue = ref(params[1].defaultValue);
     
     const decriment = () => {
         if (illuminationValue.value > 5) {
@@ -26,7 +26,6 @@
     }
 
     const updateSelect = ([name, value]) => {
-            
         if (name === 'type-of-premises') {
             illuminationValue.value = value;
         }
@@ -34,6 +33,10 @@
             store.illumination.premises = value;
         }
     }
+
+    onMounted(() => {
+        store.illumination.lk = illuminationValue.value;
+    });
 
     watch(illuminationValue, newVal => {
         store.illumination.lk = newVal;
@@ -67,6 +70,7 @@
                         :modelValue="item.defaultValue"
                         :options="item.options"
                         :name="item.name"
+                        :isNotInit="item.name === 'type-of-premises'"
                         :isWithTitles="item.isWithTitle"
                     />
                 </div>

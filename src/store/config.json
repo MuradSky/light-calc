@@ -3,11 +3,11 @@
         "first": {
             "title": "Параметры помещения",
             "params": [
-                { "id": 1, "min": 0.5, "name": "length", "label": "Длина, м", "defaultValue": 5 },
-                { "id": 2, "min": 0.5, "name": "width", "label": "Ширина, м", "defaultValue": 5 },
-                { "id": 4, "min": 0.5, "name": "room_height", "label": "Высота помещения, м", "defaultValue": 3 },
-                { "id": 5, "min": 0.5, "name": "install_height", "label": "Высота установки, м", "defaultValue": 3  },
-                { "id": 6, "min": 0.5, "name": "working_plane", "label": "Рабочая поверхность, м", "defaultValue": 0.8 }
+                { "id": 1, "min": 0.5, "max": 100, "name": "length", "label": "Длина, м", "defaultValue": 5 },
+                { "id": 2, "min": 0.5, "max": 100, "name": "width", "label": "Ширина, м", "defaultValue": 5 },
+                { "id": 4, "min": 0.5, "max": 20, "name": "room_height", "label": "Высота помещения, м", "defaultValue": 3 },
+                { "id": 5, "min": 0.5, "max": 20, "name": "install_height", "label": "Высота установки, м", "defaultValue": 3  },
+                { "id": 6, "min": 0, "max": 20, "name": "working_plane", "label": "Рабочая поверхность, м", "defaultValue": 0.8 }
             ]
         },
         "second": {

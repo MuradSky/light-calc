@@ -5,7 +5,7 @@ RectAreaLightUniformsLib.init();
 const createLamp = (lampGroup) => {
     const width = .4;
     const deph = .4;
-    return (x, y, z, waht) => {
+    return (x, y, z) => {
         const lampM = new THREE.MeshStandardMaterial({ color: '#fff', emissive: 'gray' });
         const boxGeometry = new THREE.BoxGeometry(width, 0.01, deph);
         const lamp = new THREE.Mesh(boxGeometry, lampM);
@@ -20,20 +20,14 @@ const createLamp = (lampGroup) => {
         lamp.add(glas);
 
 
-        const color = new THREE.Color(0x808080); // Начальный серый цвет
-        color.lerp(new THREE.Color(0xffffff), 0.3); 
-        const topM = new THREE.MeshStandardMaterial({ color: color, emissive: '#000' });
-        const topGeometry = new THREE.BoxGeometry(width, 0.01, deph);
-        const top = new THREE.Mesh(topGeometry, topM);
-        top.position.y = .01
-        lamp.add(top);
+        // const color = new THREE.Color(0x808080); // Начальный серый цвет
+        // color.lerp(new THREE.Color(0xffffff), 0.3); 
+        // const topM = new THREE.MeshStandardMaterial({ color: color, emissive: '#000' });
+        // const topGeometry = new THREE.BoxGeometry(width, 0.01, deph);
+        // const top = new THREE.Mesh(topGeometry, topM);
+        // top.position.y = .01
+        // lamp.add(top);
 
-        const rectLight = new THREE.RectAreaLight(0xffffff, 10, 1, 0.3);
-        rectLight.position.set(0, 0, 0);
-        rectLight.rotation.x = -Math.PI / 2;
-        rectLight.intensity = 35 + ((waht * 35) / 1000);
-    
-        lamp.add(rectLight);
         lampGroup.add(localLampGroup);
     }
 };

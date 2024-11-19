@@ -1,7 +1,7 @@
 <script setup>
     import { ref, watch } from 'vue';
 
-    const props = defineProps(['value', 'name', 'min']);
+    const props = defineProps(['value', 'name', 'min', 'max']);
     const emit = defineEmits(['onChange']);
     const value = ref(props.value);
         
@@ -24,6 +24,13 @@
         const inputValue = (changeValue[1] === '.' && !changeValue[2]) ? changeValue
             : changeValue.replace(/[^0-9.]/g, "").replace(/(\..*?)\..*/g, '$1');
         e.target.value = inputValue;
+        console.log(+inputValue, props.max)
+        if (+inputValue > props?.max) {
+            value.value = props.max;
+            emit('onChange', [props.max, e.target.name]);
+            return;
+        }
+
         if (+inputValue < props.min || isNaN(e.target.value)) {
             value.value = props.min;
             emit('onChange', [props.min, e.target.name]);

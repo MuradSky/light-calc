@@ -1,11 +1,65 @@
 import * as THREE from 'three';
 import { createLamp, groundMaterial, glbLoader } from './materials';
-
-import { useCamera, useHelpers, useRender, useScene, useSceneLights } from './hooks';
+// createLamp
+import { useCamera, useHelpers, useReactLigth, useRender, useScene, useSceneLights } from './hooks';
 import { store } from '@/store';
 import { watch } from 'vue';
 
 const fac = num => (num * 0.01) + 0.2;
+
+const create = (scene) => {
+// Параметры сцены
+const roomWidth = 5;
+const roomDepth = 5;
+const lampHeight = 5;
+const lampCount = 10;
+
+// Создаем InstancedMesh для светильников
+const lampGeometry = new THREE.BoxGeometry(0.3, 0.1, 0.3);
+const lampMaterial = new THREE.MeshStandardMaterial({
+  color: 0xffff00,
+  emissive: 0xffff00,
+  emissiveIntensity: 1,
+});
+const instancedMesh = new THREE.InstancedMesh(lampGeometry, lampMaterial, lampCount);
+
+// Распределяем светильники
+const lampPositions = []; // Сохраняем позиции для привязки источников света
+for (let i = 0; i < lampCount; i++) {
+  const matrix = new THREE.Matrix4();
+
+  // Расчет случайной позиции в комнате
+  const x = (Math.random() - 0.5) * roomWidth;
+  const z = (Math.random() - 0.5) * roomDepth;
+  const y = lampHeight;
+
+  // Устанавливаем позицию светильника
+  matrix.setPosition(x, 3, z);
+  instancedMesh.setMatrixAt(i, matrix);
+
+  // Сохраняем позицию для источников света
+  lampPositions.push(new THREE.Vector3(x, 3, z));
+}
+
+// Добавляем InstancedMesh в сцену
+scene.add(instancedMesh);
+const lightCount = 10; // Ограничиваем количество активных источников света
+const lights = [];
+for (let i = 0; i < lightCount; i++) {
+  const spotLight = new THREE.SpotLight('#fff', 100); // Цвет и интенсивность
+  spotLight.position.copy(lampPositions[i]); // Привязываем к позиции лампы
+  spotLight.target.position.set(lampPositions[i].x, 0, lampPositions[i].z); // Направляем вниз
+  spotLight.angle = Math.PI / 4; // Угол рассеивания (в радианах)
+  spotLight.penumbra = 0.2; // Мягкость края света
+  spotLight.distance = 6; // Радиус действия света
+
+  // Добавляем источник света и его цель
+  lights.push(spotLight);
+  scene.add(spotLight);
+  scene.add(spotLight.target);
+}
+
+};
 
 const app = {
     scene: null,
@@ -80,13 +134,15 @@ const app = {
         this.scene = useScene();
         useHelpers(this.scene)
         useSceneLights(this.scene);
+        const { updateSize, updateIntensity } =  useReactLigth(this.scene);
+
         this.renderer = useRender({ canvas, width, height});
         this.camera = useCamera({ renderer: this.renderer, width, height, });
         
         const model = await glbLoader(this.scene);
         const ground = groundMaterial();
         this.scene.add(ground);
-        this.lightCountCalc(ground.scale);
+        // this.lightCountCalc(ground.scale);
 
         const setting = (room, lightCount, waht) => {
             const { width, room_height, length } = room;
@@ -106,7 +162,21 @@ const app = {
         setting(store.room, store.lightCount, store.luminous_flux);
 
         watch(store, () => {
-            setting(store.room, store.lightCount, store.luminous_flux);
+            setting(
+                store.room,
+                store.lightCount,
+                store.luminous_flux
+            );
+            updateSize(
+                store.room.width,
+                store.room.length,
+                store.room.install_height,
+            );
+            updateIntensity(
+                store.luminous_flux,
+                store.illumination.lk,
+                store.room.install_height,
+            );
         });
 
         watch(store.coefficients, newVal => {
@@ -129,7 +199,7 @@ const app = {
                 }
             });
         });
-        
+
         this.animated();
     },
     animated() {

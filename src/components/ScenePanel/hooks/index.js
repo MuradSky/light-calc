@@ -1,3 +1,4 @@
+export { useReactLigth } from "./useReactLigth";
 export { useHelpers } from "./useHelpers";
 export { useScene } from "./useScene";
 export { useCamera } from "./useCamera";

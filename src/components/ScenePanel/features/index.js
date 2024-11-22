@@ -1,3 +1,7 @@
+export { useText } from "./useText";
+export { useLamp } from "./useLamp";
+export { useGround } from "./useGround";
+export { useGlbModel } from "./useGlbModel";
 export { useReactLigth } from "./useReactLigth";
 export { useHelpers } from "./useHelpers";
 export { useScene } from "./useScene";

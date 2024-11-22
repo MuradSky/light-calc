@@ -1,7 +1,7 @@
 import * as THREE from 'three';
 import { GLTFLoader } from "three/examples/jsm/Addons.js"
 
-export const glbLoader = async (scene) => {
+export const useGlbModel = async (scene) => {
     const loader = new GLTFLoader();
     const model = await new Promise((resove, reject) => {
         loader.load(

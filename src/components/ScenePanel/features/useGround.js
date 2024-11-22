@@ -1,14 +1,14 @@
 import * as THREE from 'three';
 
-const groundMaterial = (is) => {
+export const useGround = (scene) => {
     const groundMat = new THREE.MeshStandardMaterial({
         roughness: 0.4,
         color: 0xffffff,
         metalness: .1,
-        transparent: !is && true,
-        opacity: is ? 1 : 0,
+        transparent: true,
+        opacity: 0,
         bumpScale: 1,
-        side: !is && THREE.BackSide,
+        side: THREE.BackSide,
     });
 
     const groundGeometry = new THREE.BoxGeometry(1, 1, 1);
@@ -17,7 +17,7 @@ const groundMaterial = (is) => {
     groundGeometry.translate(0, 0, 0);
     // groundMesh.castShadow = true;
     // groundMesh.receiveShadow = true;
-    return groundMesh;
-};
 
-export { groundMaterial };
+    scene.add(groundMesh);
+    return groundMesh;
+}

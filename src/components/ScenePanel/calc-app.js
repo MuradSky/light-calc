@@ -45,11 +45,7 @@ const app = {
         this.coefRecalc(model);
 
         watch(store, () => {
-            updateText(
-                store.lightCountFromScene,
-                store.lightCount,
-                store.illumination.lk
-            );
+            updateText(store);
         });
 
         this.animated();

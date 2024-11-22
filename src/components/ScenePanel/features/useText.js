@@ -52,36 +52,26 @@ export const useText = async (scene) => {
     let textMesh = renderLM(scene, font, 0);
     renderLabel(scene, font);
 
-    const updateText = async (count3d, relCount, lk) => {
-        if (count3d && relCount && lk) {
-            let actualLk = lk;
+    const updateText = async (store) => {
+        const flux_real = store?.usage_coef * store?.lightCountFromScene / (store.room?.width * store.room?.length);
 
-            if (count3d > relCount) {
-                const oneLampPower = lk / relCount;
-                const remainder = count3d - relCount;
-                for (let i = 0; i < remainder; i++) {
-                    actualLk+=oneLampPower
-                }
+        console.log(store, flux_real);
+
+        if (textMesh) {
+            scene.remove(textMesh); // Удаляем текст из сцены
+            if (textMesh.geometry) textMesh.geometry.dispose();
+            if (textMesh.material) {
+            if (Array.isArray(textMesh.material)) {
+                textMesh.material.forEach(mat => mat.dispose());
+            } else {
+                textMesh.material.dispose();
+            }
             }
 
-            if (textMesh) {
-                scene.remove(textMesh); // Удаляем текст из сцены
+            textMesh = null;
 
-                // Освобождаем ресурсы геометрии и материала
-                if (textMesh.geometry) textMesh.geometry.dispose();
-                if (textMesh.material) {
-                if (Array.isArray(textMesh.material)) {
-                    textMesh.material.forEach(mat => mat.dispose());
-                } else {
-                    textMesh.material.dispose();
-                }
-                }
-
-                textMesh = null; // Обнуляем ссылку
-
-            }
-            textMesh = renderLM(scene, font, actualLk.toFixed(0));
         }
+        textMesh = renderLM(scene, font, flux_real);
     };
 
     return updateText;

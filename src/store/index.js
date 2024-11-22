@@ -10,6 +10,7 @@ export const store = reactive({
     totalLightCount: 1,
     luminous_flux: 1650,
     lightCountFromScene: 0,
+    usage_coef: 0,
 });
 
 export const matrix = {
@@ -63,6 +64,7 @@ export function calculate(params) {
     let qty = Math.ceil(params.illumination_lk * _space * params.reserve_coefficient / (params.luminous_flux * usage_coef));
     qty = qty === Infinity ? 0 : qty;
     
+    store.usage_coef = usage_coef;
     store.lightCount = qty;
 }
 

@@ -32,11 +32,7 @@ const app = {
         const { updateLamps } = useLamp(this.scene);
         const updateText = await useText(this.scene)
        
-        updateText(store.luminous_flux);
-
-        watch(() => store.luminous_flux, val => {
-            updateText(val);
-        });
+        updateText(store.lightCountFromScene);
 
         this.lightAndGroundRecalc(
             ground,
@@ -45,7 +41,16 @@ const app = {
             updateLamps,
             model,
         );
+
         this.coefRecalc(model);
+
+        watch(store, () => {
+            updateText(
+                store.lightCountFromScene,
+                store.lightCount,
+                store.illumination.lk
+            );
+        });
 
         this.animated();
     },

@@ -13,7 +13,7 @@ const promise = () => new Promise((resolve, reject) => {
 });
 
 const renderLM = (scene, font, number) => {
-    const textGeometry = new TextGeometry(number+' лм', {
+    const textGeometry = new TextGeometry(number+' ЛК', {
         font: font,
         size: .3, // Размер текста
         height: 0.02, // Глубина текста
@@ -52,26 +52,36 @@ export const useText = async (scene) => {
     let textMesh = renderLM(scene, font, 0);
     renderLabel(scene, font);
 
-    const updateText = async (number) => {
-        console.log(textMesh);
+    const updateText = async (count3d, relCount, lk) => {
+        if (count3d && relCount && lk) {
+            let actualLk = lk;
 
-        if (textMesh) {
-            scene.remove(textMesh); // Удаляем текст из сцены
-
-            // Освобождаем ресурсы геометрии и материала
-            if (textMesh.geometry) textMesh.geometry.dispose();
-            if (textMesh.material) {
-            if (Array.isArray(textMesh.material)) {
-                textMesh.material.forEach(mat => mat.dispose());
-            } else {
-                textMesh.material.dispose();
-            }
+            if (count3d > relCount) {
+                const oneLampPower = lk / relCount;
+                const remainder = count3d - relCount;
+                for (let i = 0; i < remainder; i++) {
+                    actualLk+=oneLampPower
+                }
             }
 
-            textMesh = null; // Обнуляем ссылку
+            if (textMesh) {
+                scene.remove(textMesh); // Удаляем текст из сцены
 
+                // Освобождаем ресурсы геометрии и материала
+                if (textMesh.geometry) textMesh.geometry.dispose();
+                if (textMesh.material) {
+                if (Array.isArray(textMesh.material)) {
+                    textMesh.material.forEach(mat => mat.dispose());
+                } else {
+                    textMesh.material.dispose();
+                }
+                }
+
+                textMesh = null; // Обнуляем ссылку
+
+            }
+            textMesh = renderLM(scene, font, actualLk.toFixed(0));
         }
-        textMesh = renderLM(scene, font, number);
     };
 
     return updateText;

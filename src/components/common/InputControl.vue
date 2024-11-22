@@ -24,7 +24,6 @@
         const inputValue = (changeValue[1] === '.' && !changeValue[2]) ? changeValue
             : changeValue.replace(/[^0-9.]/g, "").replace(/(\..*?)\..*/g, '$1');
         e.target.value = inputValue;
-        console.log(+inputValue, props.max)
         if (+inputValue > props?.max) {
             value.value = props.max;
             emit('onChange', [props.max, e.target.name]);

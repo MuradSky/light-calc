@@ -9,16 +9,21 @@
 
 	onMounted(() => {
 		const lightCount = document.querySelector('[data-selector="light.count"]');
+		const lightCountScene = document.querySelector('[data-selector="light.count.scene"]');
 		const roomArea = document.querySelector('[data-selector="room.area"]');
 
 		lightCount.innerText = store.lightCount; 
+		lightCountScene.innerText = store.lightCountFromScene; 
 		roomArea.innerText = +Number.parseFloat(store.room.length * store.room.width).toFixed(1);
 	});
 
 	watch(store, newVal => {
 		const lightCount = document.querySelector('[data-selector="light.count"]');
 		const roomArea = document.querySelector('[data-selector="room.area"]');
+		const lightCountScene = document.querySelector('[data-selector="light.count.scene"]');
+
 		lightCount.innerText = newVal.lightCount; 
+		lightCountScene.innerText = store.lightCountFromScene; 
 		roomArea.innerText = +Number.parseFloat(newVal.room.length * newVal.room.width).toFixed(1);
 	});
 </script>

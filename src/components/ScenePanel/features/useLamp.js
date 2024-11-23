@@ -12,8 +12,8 @@ const useLamp = (scene) => {
 
     // Создаем материалы для верхней и нижней стороны
     const lampMaterialTop = new THREE.MeshStandardMaterial({
-        color: 'grey', // Желтый для верхней стороны
-        emissive: 'grey', // Светящийся материал
+        color: '#333', // Желтый для верхней стороны
+        emissive: '#333', // Светящийся материал
         emissiveIntensity: 1,
         side: THREE.FrontSide,  // Применяется только для верхней стороны
     });

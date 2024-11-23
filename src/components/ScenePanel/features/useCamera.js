@@ -12,10 +12,10 @@ export const useCamera = ({
     controls.minDistance = 1;
     controls.maxDistance = 100;
     
-    camera.position.set(
-        -3.299594214434818,
-        4.0937388822547955,
-        -3.889675667346418
+    camera.position.set( 
+        -4.177739671461607,
+        5.032033307134937,
+        -0.026997158066082175
     );
     
     camera.rotation.set(

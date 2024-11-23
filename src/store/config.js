@@ -1,4 +1,4 @@
-{
+export const config = {
     "controlPanel": {
         "first": {
             "title": "Параметры помещения",
@@ -18,7 +18,7 @@
                     "name": "type-of-premises", 
                     "label": "Тип помещения", 
                     "type": "select",
-                    "defaultValue": 25,
+                    "defaultValue": 0,
                     "isWithTitle": true,
                     "options": [
                         {

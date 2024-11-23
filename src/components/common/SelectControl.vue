@@ -45,10 +45,8 @@
         }
     }
 
-onMounted(() => {
-        console.log(props.isNotInit);
-
-       !props.isNotInit && emit('update:modelValue', [props.name, props.modelValue])
+    onMounted(() => {
+        !props.isNotInit && emit('update:modelValue', [props.name, props.modelValue])
         window.addEventListener('click', onClose);
     });
 
@@ -57,6 +55,8 @@ onMounted(() => {
     });
 
     watch(() => props.modelValue, (newVal) => {
+        console.log(props.isNotInit);    
+        console.log(newVal)
         selectedValue.value = newVal;
     });
 

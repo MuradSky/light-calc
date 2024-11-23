@@ -4,7 +4,7 @@ import { FontLoader, TextGeometry } from "three/examples/jsm/Addons.js";
 const promise = () => new Promise((resolve, reject) => {
     const fontLoader = new FontLoader();
     try {
-        fontLoader.load('/Onest_Bold.json', font => {
+        fontLoader.load('/calc/Onest_Bold.json', font => {
             resolve(font);
         });
     } catch (err) {
@@ -49,29 +49,24 @@ const renderLabel = (scene, font) => {
 
 export const useText = async (scene) => {
     const font = await promise(scene);
-    let textMesh = renderLM(scene, font, 0);
+    let textMesh = null;
     renderLabel(scene, font);
 
     const updateText = async (store) => {
-        const flux_real = store?.usage_coef * store?.lightCountFromScene / (store.room?.width * store.room?.length);
-
-        console.log(store, flux_real);
-
+        const flux_real = ((store?.usage_coef * store?.lightCountFromScene) / (store.room?.width * store.room?.length)) * 100 * 10;
         if (textMesh) {
             scene.remove(textMesh); // Удаляем текст из сцены
             if (textMesh.geometry) textMesh.geometry.dispose();
             if (textMesh.material) {
-            if (Array.isArray(textMesh.material)) {
-                textMesh.material.forEach(mat => mat.dispose());
-            } else {
-                textMesh.material.dispose();
+                if (Array.isArray(textMesh.material)) {
+                    textMesh.material.forEach(mat => mat.dispose());
+                } else {
+                    textMesh.material.dispose();
+                }
             }
-            }
-
             textMesh = null;
-
         }
-        textMesh = renderLM(scene, font, flux_real);
+        if (!isNaN(flux_real)) textMesh = renderLM(scene, font, flux_real.toFixed(0));
     };
 
     return updateText;

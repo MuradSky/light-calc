@@ -20,6 +20,10 @@
         padding: 15px 20px;
 
         max-width: 354px;
+
+        @media (max-width: 901px) {
+            max-width: 100%;
+        }
     }
 
     .block {

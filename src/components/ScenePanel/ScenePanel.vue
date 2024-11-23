@@ -23,5 +23,14 @@ onUnmounted(() => {
         max-width: 910px;
         border-radius: 6px;
         overflow: hidden;
+
+        @media (max-width: 901px) {
+            max-width: 100%;
+            min-height: 400px;
+        }
+
+        @media (max-width: 500px) {
+            min-height: 250px;
+        }
     }
 </style>

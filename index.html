@@ -15,7 +15,9 @@
 				gap: 20px;
 
 				padding: 40px 80px;
-				
+				@media (max-width: 901px) {
+					flex-direction: column;
+				}
 			}
 
 			.light-count,
@@ -37,6 +39,8 @@
 			.select select {
 				font-size: 24px;
 			}
+
+			
 		</style>
 	</head>
 	<body>
@@ -64,6 +68,11 @@
 			</div>
 			<div class="light-count">
 				<div data-selector="light.count">0</div>
+				<div>шт</div>
+			</div>
+
+			<div class="light-count">
+				<div data-selector="light.count.scene">0</div>
 				<div>шт</div>
 			</div>
 		</div>

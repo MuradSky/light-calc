@@ -10,23 +10,28 @@
     const controlPanel = {...store.controlPanel.second};
     const params = reactive(controlPanel.params);
     const illuminationValue = ref(params[1].defaultValue);
+    const type = ref(0);
     
     const decriment = () => {
+        type.value = 0;
         if (illuminationValue.value > 5) {
             illuminationValue.value--;
         }
     }
 
     const incriment = () => {
+         type.value = 0;
         illuminationValue.value++;
     }
 
-    const onChange = ([value])=> {
+    const onChange = ([value]) => {
+        type.value = 0;
         illuminationValue.value = +value;
     }
 
     const updateSelect = ([name, value]) => {
         if (name === 'type-of-premises') {
+            type.value = value;
             illuminationValue.value = value;
         }
         if (name === 'cleanliness-of-the-premises') {
@@ -67,10 +72,11 @@
                 <div :class="cn.control" v-if="item.type === 'select'">
                     <SelectControl 
                         @update:modelValue="updateSelect"
-                        :modelValue="item.defaultValue"
+                        :modelValue="item.name === 'type-of-premises' ? type : item.defaultValue"
                         :options="item.options"
                         :name="item.name"
                         :isNotInit="item.name === 'type-of-premises'"
+                        :placeholder="item.name === 'type-of-premises' ? 'Произвольное помещение' : ''"
                         :isWithTitles="item.isWithTitle"
                     />
                 </div>

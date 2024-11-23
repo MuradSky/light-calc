@@ -1,5 +1,5 @@
 import { reactive, watch } from "vue";
-import config from './config.json';
+import { config } from './config';
 
 export const store = reactive({
     ...config,

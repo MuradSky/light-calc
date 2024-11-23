@@ -9,5 +9,16 @@ export default defineConfig({
 		alias: {
 			'@': fileURLToPath(new URL('./src', import.meta.url)),
 		}
-	}
+    },
+    
+	build: {
+        rollupOptions: {
+            output: {
+                entryFileNames: 'index.min.js',
+                assetFileNames: 'index.min.css',
+                chunkFileNames: null,
+                manualChunks: undefined,
+            }
+        }
+    },
 })

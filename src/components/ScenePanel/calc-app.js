@@ -14,7 +14,6 @@ import {
     useText
 } from './features';
 
-
 const app = {
     scene: null,
     camera: null,
@@ -77,6 +76,18 @@ const app = {
 
         setting(store.room, store.lightCount, store.luminous_flux);
         
+        updateSize(
+            store.room.width,
+            store.room.length,
+            store.room.install_height,
+        );
+
+        updateIntensity(
+            store.luminous_flux,
+            store.illumination.lk,
+            store.room.install_height,
+        );
+
         watch(store, () => {
             setting(
                 store.room,

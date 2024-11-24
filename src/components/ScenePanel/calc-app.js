@@ -44,6 +44,9 @@ const app = {
 
         this.coefRecalc(model);
 
+        updateText(store);
+
+
         watch(store, () => {
             updateText(store);
         });

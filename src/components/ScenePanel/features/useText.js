@@ -4,7 +4,7 @@ import { FontLoader, TextGeometry } from "three/examples/jsm/Addons.js";
 const promise = () => new Promise((resolve, reject) => {
     const fontLoader = new FontLoader();
     try {
-        fontLoader.load('/calc/Onest_Bold.json', font => {
+        fontLoader.load('/Onest_Bold.json', font => {
             resolve(font);
         });
     } catch (err) {

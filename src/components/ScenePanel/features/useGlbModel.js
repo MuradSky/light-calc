@@ -5,7 +5,7 @@ export const useGlbModel = async (scene) => {
     const loader = new GLTFLoader();
     const model = await new Promise((resove, reject) => {
         loader.load(
-            '/calc/Int_glb-001.glb',
+            '/Int_glb-001.glb',
             (glb) => {
                 const model = glb.scene;
                 model.traverse(function (child) {

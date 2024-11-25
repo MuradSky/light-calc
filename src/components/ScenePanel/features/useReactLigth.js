@@ -19,7 +19,6 @@ export const useReactLigth = (scene) => {
     };
 
     const updateIntensity = (flux, lk) => {
-        console.log(flux, lk);
         const int = flux / 1000 + lk / 100;
         rectLight.intensity = int;
     }

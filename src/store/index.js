@@ -4,7 +4,10 @@ import { config } from './config';
 export const store = reactive({
     ...config,
     room: {},
-    illumination: {},
+    illumination: {
+        lk: 200,
+        premises: 1.15,
+    },
     coefficients: {},
     lightCount: 1,
     totalLightCount: 1,

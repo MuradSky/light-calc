@@ -53,7 +53,11 @@ export const useText = async (scene) => {
     renderLabel(scene, font);
 
     const updateText = async (store) => {
-        const flux_real = ((store?.usage_coef * store?.lightCountFromScene) / (store.room?.width * store.room?.length)) * 100 * 10;
+        const flux_real = (
+            (store?.usage_coef * store?.luminous_flux * store?.lightCountFromScene)
+            / (store.room?.width * store.room?.length) / store?.illumination?.premises
+        );
+
         if (textMesh) {
             scene.remove(textMesh); // Удаляем текст из сцены
             if (textMesh.geometry) textMesh.geometry.dispose();

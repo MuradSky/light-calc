@@ -2,11 +2,14 @@
 <html lang="en">
 	<head>
 		<meta charset="UTF-8" />
-		<link rel="icon" type="image/svg+xml" href="/vite.svg" />
+		<link href="https://fonts.googleapis.com/css2?family=Golos+Text:wght@400..900&display=swap" rel="stylesheet">
 		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-		<title>Vite + Vue</title>
+		<title>Калькулятор Darklum</title>
 
 		<style>
+			body {
+				font-family: 'Golos', sans-serif;
+			}
 			.panel {
 				width: 100%;
 
@@ -39,27 +42,24 @@
 			.select select {
 				font-size: 24px;
 			}
-
 			
 		</style>
 	</head>
 	<body>
 		
+		<div class="panel"></div>
 		<div id="light-calc-app"></div>
 
 		<div class="panel">
 			<div class="select">
-				<h3>Cила света</h3>
+				<span>Cила света</span>
 				<select data-selector="light.style">
-					<option value="1650">1650</option>
-					<option value="650">650</option>
-					<option value="200">200</option>
-					<option value="500">500</option>
-					<option value="700">700</option>
-					<option value="2500">2500</option>
-					<option value="2700">2700</option>
+					<option value="1500">1500</option>
 					<option value="3000">3000</option>
-					<option value="3500">3500</option>
+					<option value="4500">4500</option>
+					<option value="6750" selected>6750</option>
+					<option value="7500">7500</option>
+					<option value="9000">9000</option>
 				</select>
 			</div>
 			<div class="area-size">

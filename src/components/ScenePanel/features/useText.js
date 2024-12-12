@@ -14,7 +14,7 @@ const promise = () => new Promise((resolve, reject) => {
 });
 
 const renderLM = (scene, font, number) => {
-    const textGeometry = new TextGeometry(number+' ЛК', {
+    const textGeometry = new TextGeometry(number + ' ЛК', {
         font: font,
         size: .3, // Размер текста
         height: 0.02, // Глубина текста

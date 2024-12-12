@@ -1,10 +1,11 @@
 import * as THREE from 'three';
 import { FontLoader, TextGeometry } from "three/examples/jsm/Addons.js";
+import { store as globalStore } from '../../../store';
 
 const promise = () => new Promise((resolve, reject) => {
     const fontLoader = new FontLoader();
     try {
-        fontLoader.load('/Onest_Bold.json', font => {
+        fontLoader.load('/calc/Onest_Bold.json', font => {
             resolve(font);
         });
     } catch (err) {
@@ -70,6 +71,7 @@ export const useText = async (scene) => {
             }
             textMesh = null;
         }
+        globalStore.flux_real = +(flux_real.toFixed(0));
         if (!isNaN(flux_real)) textMesh = renderLM(scene, font, flux_real.toFixed(0));
     };
 

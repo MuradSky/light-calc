@@ -11,9 +11,10 @@ export const store = reactive({
     coefficients: {},
     lightCount: 1,
     totalLightCount: 1,
-    luminous_flux: 1650,
+    luminous_flux: 6750,
     lightCountFromScene: 0,
     usage_coef: 0,
+    flux_real: 0,
 });
 
 export const matrix = {
@@ -35,7 +36,7 @@ export const params = {
     reflection_coefficient: '80/80/30',
     reserve_coefficient: 1.4,
     illumination_lk: 25,
-    luminous_flux: 1650,
+    luminous_flux: 6750,
 }
 
 const findClosest = (array, target) => {

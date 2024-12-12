@@ -3,11 +3,11 @@ export const config = {
         "first": {
             "title": "Параметры помещения",
             "params": [
-                { "id": 1, "min": 0.5, "max": 100, "name": "length", "label": "Длина, м", "defaultValue": 5 },
-                { "id": 2, "min": 0.5, "max": 100, "name": "width", "label": "Ширина, м", "defaultValue": 5 },
-                { "id": 4, "min": 0.5, "max": 20, "name": "room_height", "label": "Высота помещения, м", "defaultValue": 3 },
-                { "id": 5, "min": 0.5, "max": 20, "name": "install_height", "label": "Высота установки, м", "defaultValue": 3  },
-                { "id": 6, "min": 0, "max": 20, "name": "working_plane", "label": "Рабочая поверхность, м", "defaultValue": 0.8 }
+                { "id": 1, "min": 0.5, "max": 100, "name": "length", "styleType": "subtext", "label": "Длина, м", "defaultValue": 5 },
+                { "id": 2, "min": 0.5, "max": 100, "name": "width", "styleType": "subtext", "label": "Ширина, м", "defaultValue": 5 },
+                { "id": 4, "min": 0.5, "max": 20, "name": "room_height", "styleType": "subtext", "label": "Высота помещения, м", "defaultValue": 3 },
+                { "id": 5, "min": 0.5, "max": 20, "name": "install_height", "styleType": "subtext", "label": "Высота установки, м", "defaultValue": 3  },
+                { "id": 6, "min": 0, "max": 20, "name": "working_plane", "styleType": "subtext", "label": "Рабочая поверхность, м", "defaultValue": 0.8 }
             ]
         },
         "second": {
@@ -23,7 +23,7 @@ export const config = {
                     "options": [
                         {
                             "id": 1,
-                            "title": "Жилые здания",
+                            "title": "ЖИЛЫЕ ЗДАНИЯ",
                             "list": [
                                 { "id": 1, "value": 25, "label": "Лестницы (25 лк)" },
                                 { "id": 2, "value": 75, "label": "Подземные паркинги (75 лк)" },
@@ -116,6 +116,7 @@ export const config = {
                     "id": 2,
                     "name": "illumination-lk",
                     "label": "Освещенность, ЛК",
+                    "styleType": "subtext",
                     "defaultValue": 200
                 },
                 { 
@@ -169,7 +170,7 @@ export const config = {
                         { 
                             "id": "4942628N", 
                             "item": "ceiling",
-                            "label": "Очень светлый / 70", 
+                            "label": "Оч. светлый / 70", 
                             "value": 70
                         },
                         { 
@@ -225,7 +226,7 @@ export const config = {
                         { 
                             "id": "6853589D", 
                             "item": "floor", 
-                            "label": "Очень темный / 20", 
+                            "label": "Оч. темный / 20", 
                             "value": 20
                         },
                         { 

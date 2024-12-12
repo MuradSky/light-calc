@@ -8,7 +8,7 @@ const useLamp = (scene) => {
     let lampsBottom = null;
     // Геометрия для светильников
     const lampGeometry = new THREE.BoxGeometry(width, 0.05, deph); // Размеры светильника
-    const glasGeometry = new THREE.BoxGeometry(width-.1, 0.05, deph-.1); // Размеры светильника
+    const glasGeometry = new THREE.BoxGeometry(width - .1, 0.05, deph - .1); // Размеры светильника
 
     // Создаем материалы для верхней и нижней стороны
     const lampMaterialTop = new THREE.MeshStandardMaterial({

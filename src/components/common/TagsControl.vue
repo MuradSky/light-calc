@@ -3,15 +3,15 @@
     const props = defineProps(['options', 'name', 'params', 'active', 'disables']);
     const emit = defineEmits(['selectTone']);
  
-    onBeforeMount(() => {
-        const fl = props.options.find(item => !props.disables[item.id]);
-        if (fl) {
-            emit('selectTone', {
-                name: fl.item,
-                value: fl.value,
-            });
-        }
-    });
+    // onBeforeMount(() => {
+    //     const fl = props.options.find(item => !props.disables[item.id]);
+    //     if (fl) {
+    //         emit('selectTone', {
+    //             name: fl.item,
+    //             value: fl.value,
+    //         });
+    //     }
+    // });
 
     // console.log(props);
 
@@ -56,7 +56,7 @@
     .tags {
        display: flex;
        flex-wrap: wrap;
-       gap: 4px 15px;
+       gap: 4px 12px;
     }
 
     .btn {

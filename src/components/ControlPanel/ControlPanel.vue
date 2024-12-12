@@ -17,7 +17,7 @@
         background-color: #fff;
         box-shadow: 0px 4px 40px -10px #00000026;
         border-radius: 6px;
-        padding: 15px 20px;
+        padding: 16px 20px 18px;
 
         max-width: 354px;
 

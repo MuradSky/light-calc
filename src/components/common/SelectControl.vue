@@ -55,8 +55,6 @@
     });
 
     watch(() => props.modelValue, (newVal) => {
-        console.log(props.isNotInit);    
-        console.log(newVal)
         selectedValue.value = newVal;
     });
 
@@ -156,7 +154,7 @@
         white-space: nowrap;
 
         font-size: 14px;
-        font-weight: 500;
+        font-weight: 400;
         line-height: 18px;
 
         span {
@@ -220,7 +218,7 @@
     
         h4 {
             font-size: 12px;
-            font-weight: 900;
+            font-weight: 700;
             line-height: 1.2;
             margin: 0;
             padding: 8px;
@@ -266,7 +264,7 @@
         cursor: pointer;
 
         font-size: 14px;
-        font-weight: 500;
+        font-weight: 400;
         line-height: 18px;
 
         span {

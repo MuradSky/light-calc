@@ -20,7 +20,7 @@
         align-items: stretch;
         gap: 20px;
 
-        padding-top: 100px;
+        /* padding-top: 100px;*/
 
         @media (max-width: 901px) {
             flex-direction: column;

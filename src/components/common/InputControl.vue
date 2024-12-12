@@ -38,19 +38,6 @@
             emit('onChange', [value.value, e.target.name]);
         }
     };
-
-    const onBlur = (e) => {        
-        if (e.target.value === '') {
-            e.target.value = props.min;
-            value.value = props.min;
-            emit('onChange', [props.min, e.target.name]);
-        } else {
-            const inputValue = Number.parseFloat(e.target.value.replace(/[^0-9.]/g, "")).toFixed(1);
-            value.value = +inputValue;
-            e.target.value = +inputValue;
-            emit('onChange', [+inputValue, e.target.name]);
-        }
-    }
 </script>
 
 <template>
@@ -61,7 +48,6 @@
             :value="value"
             @input="onInput"
             @change="onChange"
-            @blur="onBlur"
         >
     </label>
 </template>
@@ -69,12 +55,12 @@
 <style scoped lang="scss" module="cn">
     .input {
         input {
-            width: 64px;
+            width: 54px;
             height: 26px;
             border-radius: 6px;
 
             font-size: 14px;
-            font-weight: 500;
+            font-weight: 400;
             line-height: 18px;
 
             background-color: var(--c-gray);

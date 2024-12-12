@@ -59,7 +59,7 @@
                 v-for="item,  in params" 
                 :key="item.id"
             >
-                <LabelControl :text="item.label" />
+                <LabelControl :text="item.label" :styleType="item.styleType" />
                 <div :class="cn.control" v-if="item.type !== 'select'">
                     <ButtonControl :type="'minus'" @click="decriment(item.id)" />
                     <InputControl 

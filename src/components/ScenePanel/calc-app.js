@@ -21,7 +21,7 @@ const app = {
     async start(canvas) {
         const { width, height } = canvas.getBoundingClientRect();
         this.scene = useScene();
-        this.renderer = useRender({ canvas, width, height});
+        this.renderer = useRender({ canvas, width, height });
         this.camera = useCamera({ renderer: this.renderer, width, height, });
         const { updateSize, updateIntensity } = useReactLigth(this.scene);
         const model = await useGlbModel(this.scene);
@@ -29,9 +29,13 @@ const app = {
         useHelpers(this.scene)
         useSceneLights(this.scene);
         const { updateLamps } = useLamp(this.scene);
-        const updateText = await useText(this.scene)
-       
-        updateText(store.lightCountFromScene);
+        const updateText = await useText(this.scene);
+
+        updateText(store);
+
+        watch(store, () => {
+            updateText(store);
+        });
 
         this.lightAndGroundRecalc(
             ground,
@@ -42,13 +46,6 @@ const app = {
         );
 
         this.coefRecalc(model);
-
-        updateText(store);
-
-
-        watch(store, () => {
-            updateText(store);
-        });
 
         this.animated();
     },
@@ -75,18 +72,18 @@ const app = {
         }
 
         setting(store.room, store.lightCount, store.luminous_flux);
-        
+
         updateSize(
             store.room.width,
             store.room.length,
             store.room.install_height,
         );
 
-        updateIntensity(
-            store.luminous_flux,
-            store.illumination.lk,
-            store.room.install_height,
-        );
+        updateIntensity({
+            lux: store.flux_real,
+            width: store.room.width,
+            deph: store.room.length,
+        });
 
         watch(store, () => {
             setting(
@@ -99,21 +96,22 @@ const app = {
                 store.room.length,
                 store.room.install_height,
             );
-            updateIntensity(
-                store.luminous_flux,
-                store.illumination.lk,
-                store.room.install_height,
-            );
+
+            updateIntensity({
+                lux: store.flux_real,
+                width: store.room.width,
+                deph: store.room.length,
+            });
         });
     },
     coefRecalc(model) {
         const fac = num => (num * 0.01) + 0.2;
 
-        watch(store.coefficients, newVal => {
+        const update = (newVal) => {
             model.traverse(function (child) {
                 if (child.isMesh) {
                     if (child.material.name.includes('Ceiling')) {
-                        const koef =  fac(newVal.ceiling)
+                        const koef = fac(newVal.ceiling)
                         child.material.color.setRGB(0.5263266 * koef, 0.5263266 * koef, 0.5263266 * koef);
                     }
 
@@ -123,11 +121,17 @@ const app = {
                     }
 
                     if (child.material.name.includes('Floor')) {
-                        const koef = newVal.floor === 30 ? 1 : newVal.floor == 20 ?  .5 : 0.1
+                        const koef = newVal.floor === 30 ? 1 : newVal.floor == 20 ? .5 : 0.1
                         child.material.color.setRGB(0.0511220545 * koef, 0.0220129937 * koef, 0.004116177 * koef);
-                    }                    
+                    }
                 }
             });
+        }
+
+        update(store.coefficients);
+
+        watch(store.coefficients, newVal => {
+            update(newVal);
         });
     },
     animated() {

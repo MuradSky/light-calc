@@ -7,9 +7,9 @@
     
     const controlPanel = {...store.controlPanel.third};
     const params = reactive({
-        ceiling: 80,
-        wall: 80,
-        floor: 30,
+        ceiling: 70,
+        wall: 50,
+        floor: 20,
         
         wallDisabled: [],
         floorDisabled: [],
@@ -19,9 +19,10 @@
         store.coefficients = newVal;
     });
 
-    onMounted(()=> {
+    onMounted(() => {
         setCeiling(params.ceiling);
         setWall(params.ceiling, params.wall);
+        store.coefficients = params;
     });
 
     const selectTone = ({ name, value }) => {
@@ -72,11 +73,11 @@
 
 <style scoped lang="scss" module="cn">
     .block {
-        margin-bottom: 11px;
+        /* margin-bottom: 11px; */
     }
 
     .label {
-        margin-bottom: 6px;
+        margin-bottom: 4px;
     }
 
     .head {
@@ -86,6 +87,6 @@
     .body {
         display: flex;
         flex-direction: column;
-        gap: 8px;
+        gap: 10px;
     }
 </style>

@@ -36,18 +36,32 @@
         if (id == 4) {
             updateBind(5, 'install_height', item.defaultValue);
         } 
-       
     }
 
     const incriment = (id) => {
         const item = params.find(item => item.id === id);
         if (+item.defaultValue >= item.max) return;
+
+        if (id === 6) {
+            const install_height = params.find(item => item.id === 5).defaultValue;
+            const newVal = +Number.parseFloat(item.defaultValue + 0.1).toFixed(1);
+            if (install_height > newVal) {
+                item.defaultValue = newVal;
+            }
+            return;
+        }
+
         item.defaultValue = +Number.parseFloat(item.defaultValue + 0.1).toFixed(1);
         updateParam(item.name, item.defaultValue);
         if (id == 4) {
             updateBind(5, 'install_height', item.defaultValue);
         }
-         if (id == 5 && item.defaultValue > store.room.room_height) {
+        if (id == 5 && item.defaultValue > store.room.room_height) {
+            updateBind(4, 'room_height', item.defaultValue);
+        }
+
+        if (id === 6) {
+            const install_height = params.find(item => item.id === 5);
             updateBind(4, 'room_height', item.defaultValue);
         }
     }   
@@ -63,6 +77,8 @@
             updateBind(4, 'room_height', item.defaultValue);
         }
     }
+
+    const install_height = params.find(item => item.id === 5).defaultValue - .1;
 </script>
 
 <template>
@@ -72,15 +88,15 @@
         </div>
         <div :class="cn.body">
             <div :class="cn.row" v-for="item,  in params" :key="item.id">
-                <LabelControl :text="item.label" />
+                <LabelControl :text="item.label" :styleType="item.styleType" />
                 <div :class="cn.control">
                     <ButtonControl :type="'minus'" @click="decriment(item.id)" />
                     <InputControl 
                         :name="item.name"
                         :min="item.min"
-                        :max="item.max"
+                        :max="item.name === 'working_plane' ? install_height : item.max"
                         :value="item.defaultValue"
-                        @onChange="onChange"  
+                        @onChange="onChange"
                     />
                     <ButtonControl :type="'plus'" @click="incriment(item.id)" />
                 </div>
@@ -101,7 +117,7 @@
     .body {
         display: flex;
         flex-direction: column;
-        gap: 8px;
+        gap: 6px;
     }
 
     .control,

@@ -115,16 +115,16 @@ export const config = {
                 { 
                     "id": 2,
                     "name": "illumination-lk",
-                    "label": "Освещенность, ЛК",
+                    "label": "Освещенность, лк",
                     "styleType": "subtext",
-                    "defaultValue": 200
+                    "defaultValue": 400
                 },
                 { 
                     "id": 3, 
                     "name": "cleanliness-of-the-premises", 
                     "label": "Чистота помещения", 
                     "type": "select",
-                    "defaultValue": 1.15,
+                    "defaultValue": 1.3,
                     "isWithTitle": false,
                     "options": [
                         { "id": 1, "value": 1.15, "label": "Очень чистое (коэф. запаса 1.15)" },
@@ -146,8 +146,8 @@ export const config = {
                     { "value": 30, "ids": ["6083082A", "6901577J"] }
                 ],
                 "wall": [
-                    { "bind": 80, "value": 80,  "ids": ["6853589D", "9820190NC"] },
-                    { "bind": 80, "value": 50,  "ids": ["6853589D", "9820190NC"] },
+                    { "bind": 80, "value": 80, "ids": ["6853589D", "9820190NC"] },
+                    { "bind": 80, "value": 50, "ids": ["6853589D", "9820190NC"] },
                     { "bind": 80, "value": 30, "ids": ["4554212QW", "6853589D"] },
                     { "bind": 70, "value": 50, "ids": ["4554212QW", "9820190NC"] },
                     { "bind": 50, "value": 50, "ids": ["4554212QW", "6853589D"] },

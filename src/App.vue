@@ -15,6 +15,10 @@
 		lightCount.innerText = store.lightCount; 
 		lightCountScene.innerText = store.lightCountFromScene; 
 		roomArea.innerText = +Number.parseFloat(store.room.length * store.room.width).toFixed(1);
+
+		window.dispatchEvent(new CustomEvent('light.count.scene', {
+			detail: store.lightCountFromScene
+		}))
 	});
 
 	watch(store, newVal => {
@@ -25,6 +29,10 @@
 		lightCount.innerText = newVal.lightCount; 
 		lightCountScene.innerText = store.lightCountFromScene; 
 		roomArea.innerText = +Number.parseFloat(newVal.room.length * newVal.room.width).toFixed(1);
+
+		window.dispatchEvent(new CustomEvent('light.count.scene', {
+			detail: store.lightCountFromScene
+		}))
 	});
 </script>
 

@@ -6,6 +6,7 @@ export const useRender = ({ canvas, width, height }) => {
         antialias: true,
     });
     renderer.shadowMap.enabled = true;
+    renderer.shadowMap.type = THREE.PCFSoftShadowMap; 
     renderer.setSize(width, height);
     canvas.appendChild(renderer.domElement);
     

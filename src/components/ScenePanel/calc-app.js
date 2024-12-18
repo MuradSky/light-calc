@@ -105,28 +105,33 @@ const app = {
         });
     },
     coefRecalc(model) {
-        const fac = num => (num * 0.01) + 0.2;
+        const fac = num => ((num / 10) / 2);
 
         const update = (newVal) => {
             model.traverse(function (child) {
                 if (child.isMesh) {
                     if (child.material.name.includes('Ceiling')) {
-                        const koef = fac(newVal.ceiling)
-                        child.material.color.setRGB(0.5263266 * koef, 0.5263266 * koef, 0.5263266 * koef);
+                        const koef = fac(newVal.ceiling);
+                        const color = 0.86 + koef;
+                        child.material.color.setRGB(color, color, color);
                     }
 
                     if (child.material.name.includes('Wall')) {
-                        const koef = fac(newVal.wall);
+                        const koef = fac(newVal.wall) / 3;
                         child.material.color.setRGB(0.461456865 * koef, 0.428446 * koef, 0.3664102 * koef);
                     }
 
                     if (child.material.name.includes('Floor')) {
-                        const koef = newVal.floor === 30 ? 1 : newVal.floor == 20 ? .5 : 0.1
+                        // const koef = newVal.floor === 30 ? 1 : newVal.floor == 20 ? .5 : 0.1
+                        const koef = fac(newVal.floor);
                         child.material.color.setRGB(0.0511220545 * koef, 0.0220129937 * koef, 0.004116177 * koef);
+                        child.castShadow = false;
+                        child.receiveShadow = true;
                     }
                 }
             });
         }
+
 
         update(store.coefficients);
 

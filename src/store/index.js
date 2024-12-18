@@ -5,8 +5,8 @@ export const store = reactive({
     ...config,
     room: {},
     illumination: {
-        lk: 200,
-        premises: 1.15,
+        lk: 400,
+        premises: 1.3,
     },
     coefficients: {},
     lightCount: 1,
@@ -33,9 +33,9 @@ export const params = {
     width: 5,
     room_height: 3,
     working_plane: 0.8,
-    reflection_coefficient: '80/80/30',
-    reserve_coefficient: 1.4,
-    illumination_lk: 25,
+    reflection_coefficient: '70/50/20',
+    reserve_coefficient: 1.3,
+    illumination_lk: 400,
     luminous_flux: 6750,
 }
 

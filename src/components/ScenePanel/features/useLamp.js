@@ -6,6 +6,7 @@ const useLamp = (scene) => {
     const deph = .4;
     let lampsTop = null;
     let lampsBottom = null;
+
     // Геометрия для светильников
     const lampGeometry = new THREE.BoxGeometry(width, 0.05, deph); // Размеры светильника
     const glasGeometry = new THREE.BoxGeometry(width - .1, 0.05, deph - .1); // Размеры светильника
@@ -13,8 +14,8 @@ const useLamp = (scene) => {
     // Создаем материалы для верхней и нижней стороны
     const lampMaterialTop = new THREE.MeshStandardMaterial({
         color: '#333', // Желтый для верхней стороны
-        emissive: '#333', // Светящийся материал
-        emissiveIntensity: 1,
+        // emissive: '#333', // Светящийся материал
+        // emissiveIntensity: 1,
         side: THREE.FrontSide,  // Применяется только для верхней стороны
     });
 
@@ -82,11 +83,11 @@ const useLamp = (scene) => {
                 const matrixBottom = new THREE.Matrix4();
                 matrixBottom.setPosition(adjustedX, lampHeight - 0.03, adjustedZ); // Нижний светильник чуть ниже
                 lampsBottom.setMatrixAt(index, matrixBottom); // Для нижней стороны
-
+        
                 index++;
             }
         }
-
+        
         store.lightCountFromScene = index;
         // Обновляем матрицы для верхнего и нижнего светильников
         lampsTop.instanceMatrix.needsUpdate = true;
